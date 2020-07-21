@@ -1,0 +1,119 @@
+<html>
+    
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        
+        <style>
+
+            .container {
+                margin-top: 25px;
+            }
+
+        </style>
+            <Title>Tic-Tac-Toe</Title>
+        </head>
+    <body>
+        <h1 class="text-center">Tic-Tac-Toe</h1>
+    <br>
+        <div class="container" id="board"></div>
+        <button onclick="makeBoard(board)" type="button" class="btn btn-primary">Start Game</button>
+
+    </body>
+    <script type="text/javascript">
+    var playerX = true;  
+    var playerO = true;
+    var moves = 0;
+    var win = false;
+
+   
+        function makeBoard(boardElement) {
+            var rows = 3;
+            var columns = 3;
+            for (let i = 0; i < rows; i++) {
+                var rowElement = document.createElement('div');
+                rowElement.className = 'row';
+                if(!boardArray[i]) {
+                    boardArray[i] = [];
+                }
+                for (let j = 0; j < columns; j++) {
+                    var columnElement = document.createElement('div');
+                    columnElement.className = 'col-sm-4 border text-center';
+                    columnElement.setAttribute("style" ,"height:100px");
+                    columnElement.id = i + '-' + j;
+                    columnElement.addEventListener('click', function() {
+                        moves = moves + 1;
+                        if(this.innerHTML !== "X" && this.innerHTML !== "O"){
+                         if (playerX) {this.innerHTML ="X"; playerX = false;
+                    } else { this.innerHTML ="O"; playerX = true;
+                    }}  
+                        checkWinX();
+                        checkWinO();
+                        tie();
+                    },
+                    );
+                    boardArray[i][j] = columnElement;
+                    rowElement.appendChild(columnElement);
+                }//end for j
+                boardElement.appendChild(rowElement);
+            }//end for i
+            console.log(boardArray);
+            
+        }//end function makeBoard
+        
+        resetBoard()
+    
+
+        function checkWinX() {
+            if( (boardArray[0][0].innerHTML == 'X' && boardArray[0][1].innerHTML == 'X' && boardArray[0][2].innerHTML == 'X') ||
+                (boardArray[1][0].innerHTML == 'X' && boardArray[1][1].innerHTML == 'X' && boardArray[1][2].innerHTML == 'X') ||
+                (boardArray[2][0].innerHTML == 'X' && boardArray[2][1].innerHTML == 'X' && boardArray[2][2].innerHTML == 'X') ||
+                (boardArray[0][0].innerHTML == 'X' && boardArray[1][0].innerHTML == 'X' && boardArray[2][0].innerHTML == 'X') ||
+                (boardArray[0][1].innerHTML == 'X' && boardArray[1][1].innerHTML == 'X' && boardArray[2][1].innerHTML == 'X') ||
+                (boardArray[0][2].innerHTML == 'X' && boardArray[1][2].innerHTML == 'X' && boardArray[2][2].innerHTML == 'X') ||
+                (boardArray[0][0].innerHTML == 'X' && boardArray[1][1].innerHTML == 'X' && boardArray[2][2].innerHTML == 'X') ||
+                (boardArray[0][2].innerHTML == 'X' && boardArray[1][1].innerHTML == 'X' && boardArray[2][0].innerHTML == 'X') ) {
+                    alert('Player X Wins!');
+                    win == true;
+                } 
+        }
+        function checkWinO() {
+            if( (boardArray[0][0].innerHTML == 'O' && boardArray[0][1].innerHTML == 'O' && boardArray[0][2].innerHTML == 'O') ||
+                (boardArray[1][0].innerHTML == 'O' && boardArray[1][1].innerHTML == 'O' && boardArray[1][2].innerHTML == 'O') ||
+                (boardArray[2][0].innerHTML == 'O' && boardArray[2][1].innerHTML == 'O' && boardArray[2][2].innerHTML == 'O') ||
+                (boardArray[0][0].innerHTML == 'O' && boardArray[1][0].innerHTML == 'O' && boardArray[2][0].innerHTML == 'O') ||
+                (boardArray[0][1].innerHTML == 'O' && boardArray[1][1].innerHTML == 'O' && boardArray[2][1].innerHTML == 'O') ||
+                (boardArray[0][2].innerHTML == 'O' && boardArray[1][2].innerHTML == 'O' && boardArray[2][2].innerHTML == 'O') ||
+                (boardArray[0][0].innerHTML == 'O' && boardArray[1][1].innerHTML == 'O' && boardArray[2][2].innerHTML == 'O') ||
+                (boardArray[0][2].innerHTML == 'O' && boardArray[1][1].innerHTML == 'O' && boardArray[2][0].innerHTML == 'O') ) {
+                    alert('Player O Wins!');
+                    win == true;
+                } 
+        }
+
+        function tie() {
+            if(moves == 9 && win == false){alert("It's A Tie!")}
+        }
+
+        function resetBoard() {
+            var btn = document.createElement("BUTTON");
+            btn.innerHTML = "New Game";
+            document.body.appendChild(btn);
+            btn.setAttribute("style" , "margin: 25px") 
+            btn.addEventListener('click', function() {
+                for(var i = 0; i < boardArray.length; i++) {
+                    for(var j = 0; j < boardArray.length; j++) {
+                        boardArray[i][j].innerHTML = "";
+                        moves = 0;                 
+                        } 
+            }
+        });
+        }
+
+        var board = document.getElementById("board");
+        var boardArray = [];
+        
+        
+       
+    </script>
+</html>
